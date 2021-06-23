@@ -16,19 +16,9 @@ class _FavBookState extends State<FavBook> {
     leftpadding = 0.075;
     favBookMatrix = [
       ["Ikigai", "Hector & Francsec", 'images/bookCover/ikigai.jpg', "56"],
-      [
-        "The Subtle Art of not giving a F*ck",
-        "Mark Manson",
-        'images/bookCover/subtleart.jpg',
-        "97"
-      ],
+      ["The Subtle Art of not giving a F*ck", "Mark Manson", 'images/bookCover/subtleart.jpg', "97"],
       ["Da Vinci Code", "Dan Brown", 'images/bookCover/vincicode.jpg', "527"],
-      [
-        "All this has",
-        "Monica Sabolo",
-        'images/bookCover/allthishas.jpg',
-        "36"
-      ],
+      ["All this has", "Monica Sabolo", 'images/bookCover/allthishas.jpg', "36"],
     ];
   }
 
@@ -79,6 +69,7 @@ class _FavBookState extends State<FavBook> {
       ),
       backgroundColor: Color.fromRGBO(44, 51, 59, 1),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           children: [
             Container(
@@ -122,6 +113,20 @@ class _FavBookState extends State<FavBook> {
                   children: [
                     singleBookShowcase(2),
                     singleBookShowcase(3),
+                  ],
+                ),
+              ),
+            ),
+            Center(
+              child: Container(
+                width: w * 0.65,
+                padding: EdgeInsets.only(top: h * 0.05),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    singleBookShowcase(0),
+                    singleBookShowcase(1),
                   ],
                 ),
               ),

@@ -38,7 +38,9 @@ class _RootPageState extends State<RootPage> {
                 ? Home()
                 : selectedIndex == 1
                     ? Explore()
-                    : selectedIndex == 2 ? FavBook() : Profile();
+                    : selectedIndex == 2
+                        ? FavBook()
+                        : Profile();
           }),
           // iconSize: w * 0.05,
           // containerHeight: h * 0.06,
@@ -46,24 +48,28 @@ class _RootPageState extends State<RootPage> {
           items: [
             BottomNavyBarItem(
               icon: Icon(Icons.home),
+              textAlign: TextAlign.center,
               title: Text('Home'),
               inactiveColor: Colors.grey,
               activeColor: Color.fromRGBO(167, 117, 139, 1),
             ),
             BottomNavyBarItem(
               icon: Icon(Icons.explore),
+              textAlign: TextAlign.center,
               title: Text('Explore'),
               inactiveColor: Colors.grey,
               activeColor: Color.fromRGBO(167, 117, 139, 1),
             ),
             BottomNavyBarItem(
               icon: Icon(Icons.bookmark_border),
+              textAlign: TextAlign.center,
               title: Text('Liked'),
               inactiveColor: Colors.grey,
               activeColor: Color.fromRGBO(167, 117, 139, 1),
             ),
             BottomNavyBarItem(
               icon: Icon(Icons.data_usage),
+              textAlign: TextAlign.center,
               title: Text('Profile'),
               inactiveColor: Colors.grey,
               activeColor: Color.fromRGBO(167, 117, 139, 1),

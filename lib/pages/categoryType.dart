@@ -58,13 +58,8 @@ class _CategoryTypeState extends State<CategoryType> {
         scrollDirection: Axis.vertical,
         child: Column(
           children: [
-            // Title - New Book Hot List --------------------
             Padding(
-              padding: EdgeInsets.only(
-                  left: (w * leftpadding) + 10,
-                  right: (w * leftpadding) + 10,
-                  top: 40,
-                  bottom: 0),
+              padding: EdgeInsets.only(left: (w * leftpadding) + 10, right: (w * leftpadding) + 10, top: 40, bottom: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -82,11 +77,7 @@ class _CategoryTypeState extends State<CategoryType> {
 
             // Popular 3 books ------
             Padding(
-              padding: EdgeInsets.only(
-                  left: (w * leftpadding) + 10,
-                  right: (w * leftpadding) + 10,
-                  top: 40,
-                  bottom: 40),
+              padding: EdgeInsets.only(left: (w * leftpadding) + 10, right: (w * leftpadding) + 10, top: 40, bottom: 40),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,10 +99,7 @@ class _CategoryTypeState extends State<CategoryType> {
 
             // Title - Popular Books -------------------
             Padding(
-              padding: EdgeInsets.only(
-                  left: (w * leftpadding) + 10,
-                  right: (w * leftpadding) + 10,
-                  top: 40),
+              padding: EdgeInsets.only(left: (w * leftpadding) + 10, right: (w * leftpadding) + 10, top: 40),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -128,11 +116,7 @@ class _CategoryTypeState extends State<CategoryType> {
             ),
 
             Padding(
-              padding: EdgeInsets.only(
-                  left: (w * leftpadding) + 10,
-                  right: (w * leftpadding) + 10,
-                  top: 40,
-                  bottom: 0),
+              padding: EdgeInsets.only(left: (w * leftpadding) + 10, right: (w * leftpadding) + 10, top: 40, bottom: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,11 +128,7 @@ class _CategoryTypeState extends State<CategoryType> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
-                  left: (w * leftpadding) + 10,
-                  right: (w * leftpadding) + 10,
-                  top: 30,
-                  bottom: 30),
+              padding: EdgeInsets.only(left: (w * leftpadding) + 10, right: (w * leftpadding) + 10, top: 30, bottom: 30),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
