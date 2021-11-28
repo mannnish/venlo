@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:readingbook/pages/auth/auth.repo.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -46,6 +47,12 @@ class _ProfileState extends State<Profile> {
       backgroundColor: Color.fromRGBO(44, 51, 59, 1),
       body: Column(
         children: [
+          ElevatedButton(
+            onPressed: () {
+              AuthRepo.logout(context);
+            },
+            child: Text('LOg ouT'),
+          ),
           Center(
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: w * leftpadding, vertical: h * 0.05),
@@ -54,7 +61,7 @@ class _ProfileState extends State<Profile> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 // color: Colors.yellow,
-                image: DecorationImage(image: AssetImage('images/profileDP.jpeg'), fit: BoxFit.cover),
+                // image: DecorationImage(image: AssetImage('images/profileDP.jpeg'), fit: BoxFit.cover),
               ),
             ),
           ),

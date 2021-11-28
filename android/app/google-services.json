@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "832784251324",
+    "project_id": "venlo-80fa6",
+    "storage_bucket": "venlo-80fa6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832784251324:android:e8048dbc3208231f3813b9",
+        "android_client_info": {
+          "package_name": "com.venlo.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832784251324-rqnem05mfopk07kum5s483vm0id3sj9g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFbFpH_2VOeNj-JeB7YlyWMylHtizmkFc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "832784251324-rqnem05mfopk07kum5s483vm0id3sj9g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

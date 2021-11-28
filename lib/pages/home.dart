@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
     h = MediaQuery.of(context).size.height;
     title = "Enchantment : The art of changing Hearts";
     author = "Guy Kawasaki";
-    imgurl = 'images/bookCover/guy.jpg';
+    // imgurl = 'images/bookCover/guy.jpg';
     pplCount = "69";
 
     return Scaffold(
@@ -33,21 +33,21 @@ class _HomeState extends State<Home> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(height: 15),
-          Expanded(
-            flex: 4,
-            child: AspectRatio(
-              aspectRatio: 0.64,
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(imgurl),
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-              ),
-            ),
-          ),
+          // Expanded(
+          //   flex: 4,
+          //   child: AspectRatio(
+          //     aspectRatio: 0.64,
+          //     child: Container(
+          //       decoration: BoxDecoration(
+          //         image: DecorationImage(
+          //           image: AssetImage(imgurl),
+          //           fit: BoxFit.cover,
+          //         ),
+          //         borderRadius: BorderRadius.circular(5.0),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Expanded(
             flex: 6,
             child: Column(
@@ -109,25 +109,25 @@ class _HomeState extends State<Home> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CircleAvatar(
-                            backgroundImage: AssetImage('images/ppl_user64.jpg'),
-                            radius: w * 0.05,
-                          ),
-                          SizedBox(width: 8),
-                          CircleAvatar(
-                            backgroundImage: AssetImage('images/ppl_user37.jpg'),
-                            radius: w * 0.05,
-                          ),
-                          SizedBox(width: 8),
-                          CircleAvatar(
-                            backgroundImage: AssetImage('images/ppl_user60.jpg'),
-                            radius: w * 0.05,
-                          ),
-                          SizedBox(width: 8),
-                          CircleAvatar(
-                            backgroundImage: AssetImage('images/ppl_user48.jpg'),
-                            radius: w * 0.05,
-                          ),
+                          // CircleAvatar(
+                          //   backgroundImage: AssetImage('images/ppl_user64.jpg'),
+                          //   radius: w * 0.05,
+                          // ),
+                          // SizedBox(width: 8),
+                          // CircleAvatar(
+                          //   backgroundImage: AssetImage('images/ppl_user37.jpg'),
+                          //   radius: w * 0.05,
+                          // ),
+                          // SizedBox(width: 8),
+                          // CircleAvatar(
+                          //   backgroundImage: AssetImage('images/ppl_user60.jpg'),
+                          //   radius: w * 0.05,
+                          // ),
+                          // SizedBox(width: 8),
+                          // CircleAvatar(
+                          //   backgroundImage: AssetImage('images/ppl_user48.jpg'),
+                          //   radius: w * 0.05,
+                          // ),
                         ],
                       ),
                     ),

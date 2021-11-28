@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'book.dart';
 
 class CategoryType extends StatefulWidget {
-  List details;
+  final List details;
   CategoryType({this.details});
   @override
   _CategoryTypeState createState() => _CategoryTypeState();
@@ -14,39 +13,40 @@ class _CategoryTypeState extends State<CategoryType> {
   double w, h;
 
   Widget singleBookShowcase(int index) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Book(
-                      details: widget.details[index],
-                    )));
-      },
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Container(
-          width: w * 0.2,
-          height: (w * 0.2) * 1.5,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5.0),
-              image: DecorationImage(
-                image: AssetImage(widget.details[index][2]),
-                fit: BoxFit.cover,
-              )),
-        ),
-        Container(
-            width: w * 0.2,
-            padding: EdgeInsets.only(top: 10),
-            child: Text(
-              widget.details[index][0],
-              style: TextStyle(color: Colors.white, fontSize: 13),
-            )),
-        Text(
-          widget.details[index][1],
-          style: TextStyle(color: Colors.grey, fontSize: 9),
-        )
-      ]),
-    );
+    return Container();
+    // return InkWell(
+    //   onTap: () {
+    //     Navigator.push(
+    //         context,
+    //         MaterialPageRoute(
+    //             builder: (context) => Book(
+    //                   details: widget.details[index],
+    //                 )));
+    //   },
+    //   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    //     Container(
+    //       width: w * 0.2,
+    //       height: (w * 0.2) * 1.5,
+    //       decoration: BoxDecoration(
+    //           borderRadius: BorderRadius.circular(5.0),
+    //           image: DecorationImage(
+    //             image: AssetImage(widget.details[index][2]),
+    //             fit: BoxFit.cover,
+    //           )),
+    //     ),
+    //     Container(
+    //         width: w * 0.2,
+    //         padding: EdgeInsets.only(top: 10),
+    //         child: Text(
+    //           widget.details[index][0],
+    //           style: TextStyle(color: Colors.white, fontSize: 13),
+    //         )),
+    //     Text(
+    //       widget.details[index][1],
+    //       style: TextStyle(color: Colors.grey, fontSize: 9),
+    //     )
+    //   ]),
+    // );
   }
 
   @override
@@ -77,7 +77,8 @@ class _CategoryTypeState extends State<CategoryType> {
 
             // Popular 3 books ------
             Padding(
-              padding: EdgeInsets.only(left: (w * leftpadding) + 10, right: (w * leftpadding) + 10, top: 40, bottom: 40),
+              padding:
+                  EdgeInsets.only(left: (w * leftpadding) + 10, right: (w * leftpadding) + 10, top: 40, bottom: 40),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,7 +129,8 @@ class _CategoryTypeState extends State<CategoryType> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: (w * leftpadding) + 10, right: (w * leftpadding) + 10, top: 30, bottom: 30),
+              padding:
+                  EdgeInsets.only(left: (w * leftpadding) + 10, right: (w * leftpadding) + 10, top: 30, bottom: 30),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,3 +147,5 @@ class _CategoryTypeState extends State<CategoryType> {
     );
   }
 }
+
+// change

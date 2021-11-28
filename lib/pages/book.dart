@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Book extends StatefulWidget {
-  List details;
+  final List details;
   Book({this.details});
   @override
   _BookState createState() => _BookState();
@@ -116,25 +116,25 @@ class _BookState extends State<Book> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CircleAvatar(
-                            backgroundImage: AssetImage('images/ppl_user64.jpg'),
-                            radius: w * 0.05,
-                          ),
-                          SizedBox(width: 8),
-                          CircleAvatar(
-                            backgroundImage: AssetImage('images/ppl_user37.jpg'),
-                            radius: w * 0.05,
-                          ),
-                          SizedBox(width: 8),
-                          CircleAvatar(
-                            backgroundImage: AssetImage('images/ppl_user60.jpg'),
-                            radius: w * 0.05,
-                          ),
-                          SizedBox(width: 8),
-                          CircleAvatar(
-                            backgroundImage: AssetImage('images/ppl_user48.jpg'),
-                            radius: w * 0.05,
-                          ),
+                          // CircleAvatar(
+                          //   backgroundImage: AssetImage('images/ppl_user64.jpg'),
+                          //   radius: w * 0.05,
+                          // ),
+                          // SizedBox(width: 8),
+                          // CircleAvatar(
+                          //   backgroundImage: AssetImage('images/ppl_user37.jpg'),
+                          //   radius: w * 0.05,
+                          // ),
+                          // SizedBox(width: 8),
+                          // CircleAvatar(
+                          //   backgroundImage: AssetImage('images/ppl_user60.jpg'),
+                          //   radius: w * 0.05,
+                          // ),
+                          // SizedBox(width: 8),
+                          // CircleAvatar(
+                          //     backgroundImage: AssetImage('images/ppl_user48.jpg'),
+                          //     radius: w * 0.05,
+                          //   ),
                         ],
                       ),
                     ),

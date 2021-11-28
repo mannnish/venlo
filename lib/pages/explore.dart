@@ -13,57 +13,57 @@ class _ExploreState extends State<Explore> {
   double leftpadding = 0.075;
 
   List ecobookDetails = [
-    ["Da Vinci Code", "Dan Brown", 'images/bookCover/vincicode.jpg', "527"],
-    ["All this has", "Monica Sabolo", 'images/bookCover/allthishas.jpg', "36"],
-    ["Ikigai", "Hector & Francsec", 'images/bookCover/ikigai.jpg', "56"],
-    [
-      "The Subtle Art of not giving a F*ck",
-      "Mark Manson",
-      'images/bookCover/subtleart.jpg',
-      "97"
-    ],
-    ["Enchantm-", "Guy Kawasaki", 'images/bookCover/guy.jpg', "527"],
-    [
-      "The Color Purple",
-      "Alice Walker",
-      'images/bookCover/thecolorpurple.jpg',
-      "36"
-    ],
-    ["Da Vinci Code", "Dan Brown", 'images/bookCover/vincicode.jpg', "527"],
-    ["All this has", "Monica Sabolo", 'images/bookCover/allthishas.jpg', "36"],
-    ["Ikigai", "Hector & Francsec", 'images/bookCover/ikigai.jpg', "56"],
+    // ["Da Vinci Code", "Dan Brown", 'images/bookCover/vincicode.jpg', "527"],
+    // ["All this has", "Monica Sabolo", 'images/bookCover/allthishas.jpg', "36"],
+    // ["Ikigai", "Hector & Francsec", 'images/bookCover/ikigai.jpg', "56"],
+    // [
+    //   "The Subtle Art of not giving a F*ck",
+    //   "Mark Manson",
+    //   'images/bookCover/subtleart.jpg',
+    //   "97"
+    // ],
+    // ["Enchantm-", "Guy Kawasaki", 'images/bookCover/guy.jpg', "527"],
+    // [
+    //   "The Color Purple",
+    //   "Alice Walker",
+    //   'images/bookCover/thecolorpurple.jpg',
+    //   "36"
+    // ],
+    // ["Da Vinci Code", "Dan Brown", 'images/bookCover/vincicode.jpg', "527"],
+    // ["All this has", "Monica Sabolo", 'images/bookCover/allthishas.jpg', "36"],
+    // ["Ikigai", "Hector & Francsec", 'images/bookCover/ikigai.jpg', "56"],
   ];
 
   List artbookDetails = [
-    [
-      "The Subtle Art of not giving a F*ck",
-      "Mark Manson",
-      'images/bookCover/subtleart.jpg',
-      "97"
-    ],
-    ["Enchantm-", "Guy Kawasaki", 'images/bookCover/guy.jpg', "527"],
-    [
-      "The Color Purple",
-      "Alice Walker",
-      'images/bookCover/thecolorpurple.jpg',
-      "36"
-    ],
-    ["Da Vinci Code", "Dan Brown", 'images/bookCover/vincicode.jpg', "527"],
-    ["All this has", "Monica Sabolo", 'images/bookCover/allthishas.jpg', "36"],
-    ["Ikigai", "Hector & Francsec", 'images/bookCover/ikigai.jpg', "56"],
-    [
-      "The Subtle Art of not giving a F*ck",
-      "Mark Manson",
-      'images/bookCover/subtleart.jpg',
-      "97"
-    ],
-    ["Enchant..", "Guy Kawasaki", 'images/bookCover/guy.jpg', "527"],
-    [
-      "The Color Purple",
-      "Alice Walker",
-      'images/bookCover/thecolorpurple.jpg',
-      "36"
-    ],
+    // [
+    //   "The Subtle Art of not giving a F*ck",
+    //   "Mark Manson",
+    //   'images/bookCover/subtleart.jpg',
+    //   "97"
+    // ],
+    // ["Enchantm-", "Guy Kawasaki", 'images/bookCover/guy.jpg', "527"],
+    // [
+    //   "The Color Purple",
+    //   "Alice Walker",
+    //   'images/bookCover/thecolorpurple.jpg',
+    //   "36"
+    // ],
+    // ["Da Vinci Code", "Dan Brown", 'images/bookCover/vincicode.jpg', "527"],
+    // ["All this has", "Monica Sabolo", 'images/bookCover/allthishas.jpg', "36"],
+    // ["Ikigai", "Hector & Francsec", 'images/bookCover/ikigai.jpg', "56"],
+    // [
+    //   "The Subtle Art of not giving a F*ck",
+    //   "Mark Manson",
+    //   'images/bookCover/subtleart.jpg',
+    //   "97"
+    // ],
+    // ["Enchant..", "Guy Kawasaki", 'images/bookCover/guy.jpg', "527"],
+    // [
+    //   "The Color Purple",
+    //   "Alice Walker",
+    //   'images/bookCover/thecolorpurple.jpg',
+    //   "36"
+    // ],
   ];
   _ExploreState() {
     selectedTab = 1;
@@ -76,12 +76,10 @@ class _ExploreState extends State<Explore> {
           decoration: BoxDecoration(
             border: index != selectedTab
                 ? Border(
-                    bottom: BorderSide(
-                        width: 2, color: Color.fromRGBO(44, 51, 59, 1)),
+                    bottom: BorderSide(width: 2, color: Color.fromRGBO(44, 51, 59, 1)),
                   )
                 : Border(
-                    bottom: BorderSide(
-                        width: 2, color: Color.fromRGBO(167, 117, 139, 1)),
+                    bottom: BorderSide(width: 2, color: Color.fromRGBO(167, 117, 139, 1)),
                   ),
           ),
           margin: EdgeInsets.symmetric(horizontal: 10),
@@ -175,8 +173,7 @@ class _ExploreState extends State<Explore> {
                                   : selectedTab == 7
                                       ? CategoryType(details: artbookDetails)
                                       : selectedTab == 8
-                                          ? CategoryType(
-                                              details: artbookDetails)
+                                          ? CategoryType(details: artbookDetails)
                                           : null,
         ],
       ),

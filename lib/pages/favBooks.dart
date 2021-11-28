@@ -15,46 +15,47 @@ class _FavBookState extends State<FavBook> {
   _FavBookState() {
     leftpadding = 0.075;
     favBookMatrix = [
-      ["Ikigai", "Hector & Francsec", 'images/bookCover/ikigai.jpg', "56"],
-      ["The Subtle Art of not giving a F*ck", "Mark Manson", 'images/bookCover/subtleart.jpg', "97"],
-      ["Da Vinci Code", "Dan Brown", 'images/bookCover/vincicode.jpg', "527"],
-      ["All this has", "Monica Sabolo", 'images/bookCover/allthishas.jpg', "36"],
+      // ["Ikigai", "Hector & Francsec", 'images/bookCover/ikigai.jpg', "56"],
+      // ["The Subtle Art of not giving a F*ck", "Mark Manson", 'images/bookCover/subtleart.jpg', "97"],
+      // ["Da Vinci Code", "Dan Brown", 'images/bookCover/vincicode.jpg', "527"],
+      // ["All this has", "Monica Sabolo", 'images/bookCover/allthishas.jpg', "36"],
     ];
   }
 
   Widget singleBookShowcase(int index) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      InkWell(
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Book(
-                        details: favBookMatrix[index],
-                      )));
-        },
-        child: Container(
-          width: w * 0.30,
-          height: (w * 0.30) * 1.5,
-          decoration: BoxDecoration(
-            // color: Colors.white,
-            image: DecorationImage(
-              image: AssetImage(favBookMatrix[index][2]),
-              fit: BoxFit.cover,
-            ),
-            borderRadius: BorderRadius.circular(5.0),
-          ),
-        ),
-      ),
-      Container(
-          width: w * 0.25,
-          padding: EdgeInsets.only(top: 10),
-          child: Text(
-            favBookMatrix[index][0],
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontSize: 13),
-          )),
-    ]);
+    return Container();
+    // return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    //   InkWell(
+    //     onTap: () {
+    //       Navigator.push(
+    //           context,
+    //           MaterialPageRoute(
+    //               builder: (context) => Book(
+    //                     details: favBookMatrix[index],
+    //                   )));
+    //     },
+    //     child: Container(
+    //       width: w * 0.30,
+    //       height: (w * 0.30) * 1.5,
+    //       decoration: BoxDecoration(
+    //         // color: Colors.white,
+    //         image: DecorationImage(
+    //           image: AssetImage(favBookMatrix[index][2]),
+    //           fit: BoxFit.cover,
+    //         ),
+    //         borderRadius: BorderRadius.circular(5.0),
+    //       ),
+    //     ),
+    //   ),
+    //   Container(
+    //       width: w * 0.25,
+    //       padding: EdgeInsets.only(top: 10),
+    //       child: Text(
+    //         favBookMatrix[index][0],
+    //         textAlign: TextAlign.center,
+    //         style: TextStyle(color: Colors.white, fontSize: 13),
+    //       )),
+    // ]);
   }
 
   @override
