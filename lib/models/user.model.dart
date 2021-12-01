@@ -1,4 +1,5 @@
 class UserModel {
+  String id;
   String name;
   String email;
   String photo;
@@ -7,9 +8,10 @@ class UserModel {
   String college;
   List<String> posts;
 
-  UserModel({this.name, this.email, this.photo, this.phone, this.area, this.college, this.posts});
+  UserModel({this.id, this.name, this.email, this.photo, this.phone, this.area, this.college, this.posts});
 
-  UserModel.fromJson(Map<String, dynamic> json) {
+  UserModel.fromJson(Map<String, dynamic> json, docID) {
+    id = docID;
     name = json['name'];
     email = json['email'];
     photo = json['photo'];

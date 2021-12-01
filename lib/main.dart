@@ -5,12 +5,6 @@ import 'package:readingbook/pages/auth/splash.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // SystemChrome.setSystemUIOverlayStyle(
-  //   SystemUiOverlayStyle(
-  //     statusBarColor: Colors.transparent,
-  //     statusBarBrightness: Brightness.light,
-  //   ),
-  // );
   runApp(MyApp());
 }
 

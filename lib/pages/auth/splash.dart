@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:readingbook/constants/colors.dart';
 import 'package:readingbook/constants/string.dart';
-import 'package:readingbook/pages/rootPage.dart';
+import 'package:readingbook/pages/root_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'login_page.dart';
 

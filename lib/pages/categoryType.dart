@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'book.dart';
 
 class CategoryType extends StatefulWidget {
   final List details;

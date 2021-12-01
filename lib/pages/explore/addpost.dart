@@ -1,24 +1,40 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:readingbook/constants/colors.dart';
 import 'package:readingbook/constants/string.dart';
+import 'package:readingbook/constants/toast.dart';
+import 'package:readingbook/models/book.model.dart';
 import 'package:readingbook/models/user.model.dart';
-import 'package:readingbook/pages/root_page.dart';
-import 'login_page.dart';
+import 'package:readingbook/pages/auth/auth.repo.dart';
 
-class Register extends StatefulWidget {
+class AddPost extends StatefulWidget {
   @override
-  _RegisterState createState() => _RegisterState();
+  _AddPostState createState() => _AddPostState();
 }
 
-class _RegisterState extends State<Register> {
-  String phone;
-  String college;
-  String area;
+class _AddPostState extends State<AddPost> {
+  String title;
+  String publication;
+  String author;
+  UserModel userModel;
+  List<String> categories = [];
+  List<String> photoUrl = [];
   final TextStyle titleStyle = TextStyle(fontSize: 12);
   final TextStyle inputStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.bold);
+
+  @override
+  void initState() {
+    super.initState();
+    getUser();
+  }
+
+  getUser() async {
+    userModel = await AuthRepo.getUser();
+    if (userModel == null) {
+      ToastPreset.err(str: 'some error while getting user', context: context);
+    }
+  }
 
   showError(str) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -33,38 +49,30 @@ class _RegisterState extends State<Register> {
     return GestureDetector(
       onTap: () async {
         FocusScope.of(context).unfocus();
-        if (phone == null || phone.length < 10) {
-          showError('Enter Valid Phone');
+        if (title == null || title.isEmpty) {
+          showError('Enter Valid Title');
           return;
         }
-        if (college == null || college.isEmpty) {
-          showError('Enter Area');
+        if (publication == null || publication.isEmpty) {
+          showError('Enter Publication');
           return;
         }
-        if (area == null || area.isEmpty) {
-          showError('Enter Area');
-          return;
-        }
-        User user = FirebaseAuth.instance.currentUser;
-        if (user == null) {
-          Navigator.pop(context);
-          showError('Please log in again');
-          await Future.delayed(new Duration(milliseconds: 700));
-          Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPage()));
-        }
-        UserModel model = UserModel(
-          name: user.displayName,
-          email: user.email,
-          photo: user.photoURL,
-          posts: [],
-          phone: phone,
-          area: area,
-          college: college,
+        BookModel model = BookModel(
+          author: author,
+          categories: [],
+          createdAt: DateTime.now(),
+          ownerId: userModel.id,
+          ownerName: userModel.name,
+          ownerPhone: userModel.phone,
+          photoUrl: photoUrl,
+          publication: publication,
+          sold: false,
+          title: title,
+          views: 0,
         );
         final CollectionReference dataCollection =
-            FirebaseFirestore.instance.collection(StringConstants.userCollection);
-        await dataCollection.doc(user.uid).set(model.toJson());
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => RootPage()));
+            FirebaseFirestore.instance.collection(StringConstants.bookCollection);
+        await dataCollection.doc().set(model.toJson());
       },
       child: Container(
         alignment: Alignment.centerRight,
@@ -163,33 +171,34 @@ class _RegisterState extends State<Register> {
               child: Column(
                 children: [
                   SizedBox(height: 90),
-                  textInput(
-                    title: 'Your Phone',
-                    hintText: 'Enter Your Phone',
-                    change: (val) {
-                      setState(() => phone = val);
-                    },
-                    initialValue: null,
-                    icon: Icons.phone,
-                  ),
-                  textInput(
-                    title: 'Area, State',
-                    hintText: 'Enter your area, state',
-                    change: (val) {
-                      setState(() => area = val);
-                    },
-                    initialValue: null,
-                    icon: Icons.location_city,
-                  ),
-                  textInput(
-                    title: 'College',
-                    hintText: 'Enter college name',
-                    change: (val) {
-                      setState(() => college = val);
-                    },
-                    initialValue: null,
-                    icon: Icons.work,
-                  ),
+                  // TODO : Form here
+                  // textInput(
+                  //   title: 'Your Phone',
+                  //   hintText: 'Enter Your Phone',
+                  //   change: (val) {
+                  //     setState(() => phone = val);
+                  //   },
+                  //   initialValue: null,
+                  //   icon: Icons.phone,
+                  // ),
+                  // textInput(
+                  //   title: 'Area, State',
+                  //   hintText: 'Enter your area, state',
+                  //   change: (val) {
+                  //     setState(() => area = val);
+                  //   },
+                  //   initialValue: null,
+                  //   icon: Icons.location_city,
+                  // ),
+                  // textInput(
+                  //   title: 'College',
+                  //   hintText: 'Enter college name',
+                  //   change: (val) {
+                  //     setState(() => college = val);
+                  //   },
+                  //   initialValue: null,
+                  //   icon: Icons.work,
+                  // ),
                   SizedBox(height: 30),
                   saveButton()
                 ],

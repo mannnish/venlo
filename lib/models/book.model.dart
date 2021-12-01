@@ -5,10 +5,11 @@ class BookModel {
   String ownerId;
   String ownerName;
   String ownerPhone;
-  String createdAt;
+  DateTime createdAt;
   int views;
   bool sold;
-  String photoUrl;
+  List<String> photoUrl;
+  List<String> categories;
 
   BookModel({
     this.title,
@@ -21,6 +22,7 @@ class BookModel {
     this.views,
     this.sold,
     this.photoUrl,
+    this.categories,
   });
 
   BookModel.fromJson(Map<String, dynamic> json) {
@@ -30,10 +32,11 @@ class BookModel {
     ownerId = json['owner_id'];
     ownerName = json['owner_name'];
     ownerPhone = json['owner_phone'];
-    createdAt = json['created_at'];
+    createdAt = DateTime.parse(json['created_at']);
     views = json['views'];
     sold = json['sold'];
-    photoUrl = json['photo_url'];
+    photoUrl = json['photo_url'].cast<String>();
+    categories = json['posts'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
@@ -48,6 +51,7 @@ class BookModel {
     data['views'] = this.views;
     data['sold'] = this.sold;
     data['photo_url'] = this.photoUrl;
+    data['categories'] = this.categories;
     return data;
   }
 }

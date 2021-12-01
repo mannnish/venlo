@@ -5,9 +5,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:readingbook/constants/loading.popup.dart';
 import 'package:readingbook/constants/string.dart';
 import 'package:readingbook/constants/toast.dart';
+import 'package:readingbook/models/user.model.dart';
 import 'package:readingbook/pages/auth/register.dart';
 import 'package:readingbook/pages/auth/splash.dart';
-import 'package:readingbook/pages/rootPage.dart';
+import 'package:readingbook/pages/root_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepo {
@@ -57,5 +58,23 @@ class AuthRepo {
     DocumentSnapshot ds = await FirebaseFirestore.instance.collection(StringConstants.userCollection).doc(docID).get();
     exists = ds.exists;
     return exists;
+  }
+
+  static Future<UserModel> getUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString(StringConstants.token);
+
+    CollectionReference dataCollection = FirebaseFirestore.instance.collection(StringConstants.userCollection);
+    DocumentSnapshot userData = await dataCollection.doc(token).get();
+    return UserModel(
+      id: token,
+      name: userData.get('name') ?? "",
+      phone: userData.get('phone') ?? "",
+      email: userData.get('email') ?? "",
+      area: userData.get('area') ?? "",
+      college: userData.get('college') ?? "",
+      photo: userData.get('photo') ?? "",
+      posts: userData.get('posts') ?? [],
+    );
   }
 }
