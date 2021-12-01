@@ -3,6 +3,7 @@ import 'package:readingbook/constants/colors.dart';
 import 'package:readingbook/constants/textstyles.dart';
 import 'package:readingbook/models/user.model.dart';
 import 'package:readingbook/pages/auth/auth.repo.dart';
+import 'package:readingbook/pages/profile/your_posts.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -91,7 +92,13 @@ class _ProfilePageState extends State<ProfilePage> {
               divider(),
               Text('Account', style: TextStyles.actionTitleBlack),
               item(title: 'Edit Profile', icon: Icons.star_border_rounded, func: () {}),
-              item(title: 'Your Posts', icon: Icons.feedback_outlined, func: () {}),
+              item(
+                  title: 'Your Posts',
+                  icon: Icons.feedback_outlined,
+                  func: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => YourPosts(userId: userModel.id, ids: userModel.posts)));
+                  }),
               divider(),
               Text('Settings', style: TextStyles.actionTitleBlack),
               item(title: 'Rate and Review', icon: Icons.star_border_rounded, func: () {}),

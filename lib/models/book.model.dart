@@ -1,4 +1,5 @@
 class BookModel {
+  String id;
   String title;
   String publication;
   String author;
@@ -8,10 +9,11 @@ class BookModel {
   DateTime createdAt;
   int views;
   bool sold;
-  List<String> photoUrl;
-  List<String> categories;
+  List photoUrl;
+  List categories;
 
   BookModel({
+    this.id,
     this.title,
     this.publication,
     this.author,
@@ -25,18 +27,21 @@ class BookModel {
     this.categories,
   });
 
-  BookModel.fromJson(Map<String, dynamic> json) {
+  BookModel.fromJson(Map<String, dynamic> json, id) {
+    this.id = id;
     title = json['title'];
     publication = json['publication'];
     author = json['author'];
     ownerId = json['owner_id'];
     ownerName = json['owner_name'];
     ownerPhone = json['owner_phone'];
-    createdAt = DateTime.parse(json['created_at']);
+    //   // TODO : Timestamp to date time
+    // createdAt = DateTime.parse(json['created_at']);
+    createdAt = DateTime.now();
     views = json['views'];
     sold = json['sold'];
     photoUrl = json['photo_url'].cast<String>();
-    categories = json['posts'].cast<String>();
+    categories = json['categories'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {

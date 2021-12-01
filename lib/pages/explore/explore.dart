@@ -1,6 +1,12 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:readingbook/constants/colors.dart';
+import 'package:readingbook/constants/string.dart';
 import 'package:readingbook/constants/textstyles.dart';
+import 'package:readingbook/models/book.model.dart';
+import 'package:readingbook/pages/explore/addpost.dart';
 
 class Explore extends StatefulWidget {
   @override
@@ -9,78 +15,7 @@ class Explore extends StatefulWidget {
 
 class _ExploreState extends State<Explore> {
   double w, h;
-  // String _text = "";
   int selectedTab;
-  double leftpadding = 0.075;
-
-  List ecobookDetails = [
-    // BookModel(
-    //   author: 'Hector',
-    //   createdAt: '',
-    //   ownerId: '4c34f',
-    //   ownerName: 'Manish',
-    //   ownerPhone: '9958774243',
-    //   photoUrl: 'https://avatars1.githubusercontent.com/u/60895972?s=460&v=4',
-    //   publication: 'Quantam Publication Ltd.',
-    //   sold: false,
-    //   title: 'Web Tech Quantam',
-    //   views: 12,
-    // ),
-    // ["Da Vinci Code", "Dan Brown", 'images/bookCover/vincicode.jpg', "527"],
-    // ["All this has", "Monica Sabolo", 'images/bookCover/allthishas.jpg', "36"],
-    // ["Ikigai", "Hector & Francsec", 'images/bookCover/ikigai.jpg', "56"],
-    // [
-    //   "The Subtle Art of not giving a F*ck",
-    //   "Mark Manson",
-    //   'images/bookCover/subtleart.jpg',
-    //   "97"
-    // ],
-    // ["Enchantm-", "Guy Kawasaki", 'images/bookCover/guy.jpg', "527"],
-    // [
-    //   "The Color Purple",
-    //   "Alice Walker",
-    //   'images/bookCover/thecolorpurple.jpg',
-    //   "36"
-    // ],
-    // ["Da Vinci Code", "Dan Brown", 'images/bookCover/vincicode.jpg', "527"],
-    // ["All this has", "Monica Sabolo", 'images/bookCover/allthishas.jpg', "36"],
-    // ["Ikigai", "Hector & Francsec", 'images/bookCover/ikigai.jpg', "56"],
-  ];
-
-  List artbookDetails = [
-    // [
-    //   "The Subtle Art of not giving a F*ck",
-    //   "Mark Manson",
-    //   'images/bookCover/subtleart.jpg',
-    //   "97"
-    // ],
-    // ["Enchantm-", "Guy Kawasaki", 'images/bookCover/guy.jpg', "527"],
-    // [
-    //   "The Color Purple",
-    //   "Alice Walker",
-    //   'images/bookCover/thecolorpurple.jpg',
-    //   "36"
-    // ],
-    // ["Da Vinci Code", "Dan Brown", 'images/bookCover/vincicode.jpg', "527"],
-    // ["All this has", "Monica Sabolo", 'images/bookCover/allthishas.jpg', "36"],
-    // ["Ikigai", "Hector & Francsec", 'images/bookCover/ikigai.jpg', "56"],
-    // [
-    //   "The Subtle Art of not giving a F*ck",
-    //   "Mark Manson",
-    //   'images/bookCover/subtleart.jpg',
-    //   "97"
-    // ],
-    // ["Enchant..", "Guy Kawasaki", 'images/bookCover/guy.jpg', "527"],
-    // [
-    //   "The Color Purple",
-    //   "Alice Walker",
-    //   'images/bookCover/thecolorpurple.jpg',
-    //   "36"
-    // ],
-  ];
-  _ExploreState() {
-    selectedTab = 1;
-  }
 
   Widget tabs(String name, int index) {
     return InkWell(
@@ -109,6 +44,78 @@ class _ExploreState extends State<Explore> {
         });
   }
 
+  Widget singleBookShowcase(BookModel bookModel) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 8),
+      height: w * 0.25 * 1.3,
+      child: Row(
+        children: [
+          Container(
+            width: w * 0.25,
+            height: w * 0.25 * 1.3,
+            decoration: bookModel.photoUrl.isNotEmpty
+                ? BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(7)),
+                    image: DecorationImage(
+                      image: MemoryImage(base64Decode(bookModel.photoUrl.first)),
+                      fit: BoxFit.cover,
+                    ),
+                  )
+                : BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(7)),
+                    color: ColorConstant.purple,
+                  ),
+          ),
+          SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  bookModel.title,
+                  style: TextStyles.highlighterTwo,
+                ),
+                Text(
+                  bookModel.publication,
+                  style: TextStyles.highlighterOne,
+                ),
+                Spacer(),
+                Text(
+                  "Posted by ${bookModel.ownerName}",
+                  style: TextStyles.highlighterOne,
+                ),
+                Row(
+                  children: [
+                    Spacer(),
+                    InkWell(
+                      onTap: () {},
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.bookmark_add_outlined,
+                            size: 15,
+                            color: ColorConstant.highlighterPink,
+                          ),
+                          SizedBox(width: 6),
+                          Text(
+                            "Bookmark",
+                            style: TextStyles.subTextRed,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Spacer(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     w = MediaQuery.of(context).size.width;
@@ -118,7 +125,9 @@ class _ExploreState extends State<Explore> {
       backgroundColor: ColorConstant.primaryBG,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => AddPost()));
+        },
         child: Icon(Icons.add),
         backgroundColor: ColorConstant.purple,
       ),
@@ -146,7 +155,7 @@ class _ExploreState extends State<Explore> {
                   ],
                 ),
               ),
-              Text('Recently Added', style: TextStyles.actionTitleBlack),
+              Text('Trending', style: TextStyles.actionTitleBlack),
               SizedBox(height: 12),
               // for(int)
               SingleChildScrollView(
@@ -181,7 +190,34 @@ class _ExploreState extends State<Explore> {
                   ],
                 ),
               ),
-
+              SizedBox(height: 35),
+              Text('Recently Added', style: TextStyles.actionTitleBlack),
+              SizedBox(height: 12),
+              StreamBuilder(
+                stream: FirebaseFirestore.instance.collection(StringConstants.bookCollection).snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: snapshot.data.docs.length,
+                      itemBuilder: (context, index) {
+                        QueryDocumentSnapshot mypost = snapshot.data.docs[index];
+                        BookModel model = BookModel.fromJson(mypost.data(), mypost.id);
+                        return singleBookShowcase(model);
+                      },
+                    );
+                  } else {
+                    return Text(
+                      'No Posts yet',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    );
+                  }
+                },
+              ),
               // Center(
               //   child: Container(
               //     margin: EdgeInsets.only(top: 10),

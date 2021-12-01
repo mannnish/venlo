@@ -10,12 +10,9 @@ class Bookmarked extends StatefulWidget {
 
 class _BookmarkedState extends State<Bookmarked> {
   double w, h;
-  double leftpadding;
-
   List favBookMatrix;
 
   _BookmarkedState() {
-    leftpadding = 0.075;
     favBookMatrix = [
       BookModel(
         author: 'Hector',

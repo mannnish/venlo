@@ -6,9 +6,11 @@ class UserModel {
   String phone;
   String area;
   String college;
-  List<String> posts;
+  List posts;
+  List bookmarked;
 
-  UserModel({this.id, this.name, this.email, this.photo, this.phone, this.area, this.college, this.posts});
+  UserModel(
+      {this.id, this.name, this.email, this.photo, this.phone, this.area, this.college, this.posts, this.bookmarked});
 
   UserModel.fromJson(Map<String, dynamic> json, docID) {
     id = docID;
@@ -19,6 +21,7 @@ class UserModel {
     area = json['area'];
     college = json['college'];
     posts = json['posts'].cast<String>();
+    posts = json['bookmarked'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
@@ -30,6 +33,7 @@ class UserModel {
     data['posts'] = this.posts;
     data['area'] = this.area;
     data['college'] = this.college;
+    data['bookmarked'] = this.bookmarked;
     return data;
   }
 }

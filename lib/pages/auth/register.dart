@@ -60,6 +60,7 @@ class _RegisterState extends State<Register> {
           phone: phone,
           area: area,
           college: college,
+          bookmarked: [],
         );
         final CollectionReference dataCollection =
             FirebaseFirestore.instance.collection(StringConstants.userCollection);
@@ -155,6 +156,13 @@ class _RegisterState extends State<Register> {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            title: Text('Add Post'),
+            automaticallyImplyLeading: false,
+            leading: Icon(Icons.app_registration_outlined),
+            backgroundColor: ColorConstant.purple,
+          ),
           body: Container(
             constraints: BoxConstraints.expand(),
             padding: EdgeInsets.symmetric(horizontal: 13),
@@ -162,7 +170,7 @@ class _RegisterState extends State<Register> {
               physics: BouncingScrollPhysics(),
               child: Column(
                 children: [
-                  SizedBox(height: 90),
+                  SizedBox(height: 20),
                   textInput(
                     title: 'Your Phone',
                     hintText: 'Enter Your Phone',

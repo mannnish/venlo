@@ -32,6 +32,10 @@ dependencies:
   pinput: ^0.2.6
   sliding_clipped_nav_bar: ^2.0.1
   flutter_icons: 
+  image_picker: 
+  pinch_zoom_image_last: 0.3.2
+  url_launcher: 
+  material_floating_search_bar: 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3

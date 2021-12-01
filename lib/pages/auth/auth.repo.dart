@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:readingbook/constants/loading.popup.dart';
 import 'package:readingbook/constants/string.dart';
 import 'package:readingbook/constants/toast.dart';
+import 'package:readingbook/models/book.model.dart';
 import 'package:readingbook/models/user.model.dart';
 import 'package:readingbook/pages/auth/register.dart';
 import 'package:readingbook/pages/auth/splash.dart';
@@ -66,7 +67,7 @@ class AuthRepo {
 
     CollectionReference dataCollection = FirebaseFirestore.instance.collection(StringConstants.userCollection);
     DocumentSnapshot userData = await dataCollection.doc(token).get();
-    return UserModel(
+    UserModel userModel = UserModel(
       id: token,
       name: userData.get('name') ?? "",
       phone: userData.get('phone') ?? "",
@@ -74,7 +75,52 @@ class AuthRepo {
       area: userData.get('area') ?? "",
       college: userData.get('college') ?? "",
       photo: userData.get('photo') ?? "",
-      posts: userData.get('posts') ?? [],
+      posts: userData.data().toString().contains('posts') ? userData.get('posts') ?? [] : [],
+      bookmarked: userData.data().toString().contains('bookmarked') ? userData.get('bookmarked') ?? [] : [],
     );
+    return userModel;
+  }
+
+  static Future<List<BookModel>> getPostsUser(List ids) async {
+    CollectionReference dataCollection = FirebaseFirestore.instance.collection(StringConstants.bookCollection);
+    DocumentSnapshot bookData;
+    List<BookModel> bookModels = [];
+    for (var id in ids) {
+      bookData = await dataCollection.doc(id).get();
+      try {
+        BookModel bookModel = BookModel.fromJson(bookData.data(), id);
+        // BookModel bookModel = BookModel(
+        //   title: bookData.get('title') ?? "",
+        //   publication: bookData.get('publication') ?? "",
+        //   author: bookData.get('author') ?? "",
+        //   ownerId: bookData.get('owner_id') ?? "",
+        //   ownerName: bookData.get('owner_name') ?? "",
+        //   ownerPhone: bookData.get('owner_phone') ?? "",
+        //   createdAt: DateTime.now(),
+        //   // createdAt: DateTime.parse(bookData.get('created_at')) ?? DateTime.now(),
+        //   views: bookData.get('views') ?? 0,
+        //   sold: bookData.get('sold') ?? false,
+        //   photoUrl: bookData.get('photo_url') ?? [],
+        //   categories: bookData.get('categories') ?? [],
+        // );
+        bookModels.add(bookModel);
+      } catch (e) {
+        print("ERRROR $e");
+      }
+    }
+    return bookModels;
+  }
+
+  static Future<List<BookModel>> getBookmarked() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString(StringConstants.token);
+
+    CollectionReference dataCollection = FirebaseFirestore.instance.collection(StringConstants.userCollection);
+    DocumentSnapshot userData = await dataCollection.doc(token).get();
+    List ids = userData.get('bookmarked') ?? [];
+    print(ids);
+    // get book by ids;
+    List<BookModel> models = [];
+    return models;
   }
 }
