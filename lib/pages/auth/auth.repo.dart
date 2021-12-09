@@ -81,6 +81,19 @@ class AuthRepo {
     return userModel;
   }
 
+  static Future<List<BookModel>> allBooks() async {
+    CollectionReference dataCollection = FirebaseFirestore.instance.collection(StringConstants.bookCollection);
+    List<BookModel> bookModels = [];
+    QuerySnapshot s = await dataCollection.get();
+    for (QueryDocumentSnapshot bookData in s.docs) {
+      try {
+        BookModel bookModel = BookModel.fromJson(bookData.data(), bookData.id);
+        bookModels.add(bookModel);
+      } catch (e) {}
+    }
+    return bookModels;
+  }
+
   static Future<List<BookModel>> getPostsUser(List ids) async {
     CollectionReference dataCollection = FirebaseFirestore.instance.collection(StringConstants.bookCollection);
     DocumentSnapshot bookData;

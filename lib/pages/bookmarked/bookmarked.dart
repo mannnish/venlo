@@ -1,7 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:readingbook/constants/colors.dart';
+import 'package:readingbook/constants/string.dart';
 import 'package:readingbook/constants/textstyles.dart';
+import 'package:readingbook/constants/toast.dart';
 import 'package:readingbook/models/book.model.dart';
+import 'package:readingbook/models/user.model.dart';
+import 'package:readingbook/pages/auth/auth.repo.dart';
 
 class Bookmarked extends StatefulWidget {
   @override
@@ -11,29 +16,31 @@ class Bookmarked extends StatefulWidget {
 class _BookmarkedState extends State<Bookmarked> {
   double w, h;
   List favBookMatrix;
+  UserModel userModel;
+  bool loading = true;
 
-  _BookmarkedState() {
-    favBookMatrix = [
-      BookModel(
-        author: 'Hector',
-        createdAt: DateTime.now(),
-        ownerId: '4c34f',
-        ownerName: 'Manish',
-        ownerPhone: '9958774243',
-        photoUrl: ['https://avatars1.githubusercontent.com/u/60895972?s=460&v=4'],
-        publication: 'Quantam Publication Ltd.',
-        sold: false,
-        title: 'Web Tech Quantam',
-        views: 12,
-        categories: [],
-      ),
-    ];
+  @override
+  void initState() {
+    super.initState();
+    loading = true;
+    getData();
+  }
+
+  void getData() async {
+    userModel = await AuthRepo.getUser();
+    setState(() {
+      loading = false;
+    });
   }
 
   Widget singleBookShowcase(BookModel bookModel) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8),
       height: w * 0.25 * 1.3,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: !bookModel.sold ? Colors.green.withOpacity(0.2) : Colors.red.withOpacity(0.3),
+      ),
       child: Row(
         children: [
           Container(
@@ -67,8 +74,20 @@ class _BookmarkedState extends State<Bookmarked> {
                   children: [
                     Spacer(),
                     InkWell(
-                      onTap: () {
-                        //
+                      onTap: () async {
+                        try {
+                          setState(() {
+                            userModel.bookmarked.remove(bookModel.id);
+                          });
+                          final CollectionReference userCollection =
+                              FirebaseFirestore.instance.collection(StringConstants.userCollection);
+                          await userCollection.doc(userModel.id).update({
+                            'bookmarked': userModel.bookmarked,
+                          });
+                          ToastPreset.successful(str: 'Changed', context: context);
+                        } catch (e) {
+                          ToastPreset.err(str: e.toString(), context: context);
+                        }
                       },
                       child: Row(
                         children: [
@@ -79,7 +98,7 @@ class _BookmarkedState extends State<Bookmarked> {
                           ),
                           SizedBox(width: 6),
                           Text(
-                            "Remove",
+                            "Un-Bookmark",
                             style: TextStyles.subTextRed,
                           ),
                         ],
@@ -91,6 +110,7 @@ class _BookmarkedState extends State<Bookmarked> {
               ],
             ),
           ),
+          SizedBox(width: 12),
         ],
       ),
     );
@@ -125,7 +145,36 @@ class _BookmarkedState extends State<Bookmarked> {
                   ],
                 ),
               ),
-              for (BookModel book in favBookMatrix) singleBookShowcase(book),
+              loading
+                  ? Text('Loading')
+                  : StreamBuilder(
+                      stream: FirebaseFirestore.instance.collection(StringConstants.bookCollection).snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: snapshot.data.docs.length,
+                            itemBuilder: (context, index) {
+                              QueryDocumentSnapshot mypost = snapshot.data.docs[index];
+                              BookModel model = BookModel.fromJson(mypost.data(), mypost.id);
+                              if (userModel.bookmarked.contains(model.id))
+                                return singleBookShowcase(model);
+                              else
+                                return SizedBox();
+                            },
+                          );
+                        } else {
+                          return Text(
+                            'No Posts yet',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          );
+                        }
+                      },
+                    ),
             ],
           ),
         ),

@@ -53,10 +53,34 @@ class _YourPostsState extends State<YourPosts> {
     });
   }
 
+  soldToggle(bool newValue, int index) async {
+    LoadingPopupGenerator.def(text: 'Changing', context: context);
+
+    final CollectionReference bookCollection = FirebaseFirestore.instance.collection(StringConstants.bookCollection);
+    await bookCollection.doc(ids[index]).set({
+      "sold": newValue,
+    }, SetOptions(merge: true));
+    // await bookCollection.doc(ids[index]).delete();
+
+    // ids.remove(ids[index]);
+    // final CollectionReference userCollection = FirebaseFirestore.instance.collection(StringConstants.userCollection);
+    // await userCollection.doc(widget.userId).update({
+    //   'posts': ids,
+    // });
+    Navigator.pop(context);
+    setState(() {
+      models[index].sold = newValue;
+    });
+  }
+
   Widget singleBookShowcase(int index, BookModel bookModel) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8),
       height: w * 0.25 * 1.3,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: !bookModel.sold ? Colors.green.withOpacity(0.2) : Colors.red.withOpacity(0.3),
+      ),
       child: Row(
         children: [
           Container(
@@ -116,10 +140,35 @@ class _YourPostsState extends State<YourPosts> {
                     ),
                   ],
                 ),
+                Row(
+                  children: [
+                    InkWell(
+                      onTap: () => soldToggle(!bookModel.sold, index),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.account_balance_wallet_rounded,
+                            size: 15,
+                            color: Colors.blueAccent,
+                          ),
+                          SizedBox(width: 6),
+                          Text(
+                            bookModel.sold ? "Mark as unsold" : "Mark as sold",
+                            style: TextStyles.subTextRed.copyWith(
+                              color: Colors.blueAccent,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Spacer(),
+                  ],
+                ),
                 Spacer(),
               ],
             ),
           ),
+          SizedBox(width: 12),
         ],
       ),
     );

@@ -1,2 +1,6 @@
 ## Read-Me 
-- get phone number from phone
+- sold true or false
+- Bookmark
+- PDP
+- call button 
+- search

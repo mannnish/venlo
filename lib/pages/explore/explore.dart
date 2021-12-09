@@ -5,8 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:readingbook/constants/colors.dart';
 import 'package:readingbook/constants/string.dart';
 import 'package:readingbook/constants/textstyles.dart';
+import 'package:readingbook/constants/toast.dart';
 import 'package:readingbook/models/book.model.dart';
 import 'package:readingbook/pages/explore/addpost.dart';
+import 'package:readingbook/pages/explore/search.delegate.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'pdp.dart';
 
 class Explore extends StatefulWidget {
   @override
@@ -45,73 +50,106 @@ class _ExploreState extends State<Explore> {
   }
 
   Widget singleBookShowcase(BookModel bookModel) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 8),
-      height: w * 0.25 * 1.3,
-      child: Row(
-        children: [
-          Container(
-            width: w * 0.25,
-            height: w * 0.25 * 1.3,
-            decoration: bookModel.photoUrl.isNotEmpty
-                ? BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(7)),
-                    image: DecorationImage(
-                      image: MemoryImage(base64Decode(bookModel.photoUrl.first)),
-                      fit: BoxFit.cover,
-                    ),
-                  )
-                : BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(7)),
-                    color: ColorConstant.purple,
-                  ),
-          ),
-          SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  bookModel.title,
-                  style: TextStyles.highlighterTwo,
-                ),
-                Text(
-                  bookModel.publication,
-                  style: TextStyles.highlighterOne,
-                ),
-                Spacer(),
-                Text(
-                  "Posted by ${bookModel.ownerName}",
-                  style: TextStyles.highlighterOne,
-                ),
-                Row(
-                  children: [
-                    Spacer(),
-                    InkWell(
-                      onTap: () {},
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.bookmark_add_outlined,
-                            size: 15,
-                            color: ColorConstant.highlighterPink,
-                          ),
-                          SizedBox(width: 6),
-                          Text(
-                            "Bookmark",
-                            style: TextStyles.subTextRed,
-                          ),
-                        ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (_) => PDP(model: bookModel)));
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 8),
+        height: w * 0.25 * 1.3,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: !bookModel.sold ? Colors.green.withOpacity(0.2) : Colors.red.withOpacity(0.3),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: w * 0.25,
+              height: w * 0.25 * 1.3,
+              decoration: bookModel.photoUrl.isNotEmpty
+                  ? BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(7)),
+                      image: DecorationImage(
+                        image: MemoryImage(base64Decode(bookModel.photoUrl.first)),
+                        fit: BoxFit.cover,
                       ),
+                    )
+                  : BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(7)),
+                      color: ColorConstant.purple,
                     ),
-                  ],
-                ),
-                Spacer(),
-              ],
             ),
-          ),
-        ],
+            SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    bookModel.title,
+                    style: TextStyles.highlighterTwo,
+                  ),
+                  Text(
+                    bookModel.publication,
+                    style: TextStyles.highlighterOne,
+                  ),
+                  Spacer(),
+                  Text(
+                    "Posted by ${bookModel.ownerName}",
+                    style: TextStyles.highlighterOne,
+                  ),
+                  Row(
+                    children: [
+                      Spacer(),
+                      InkWell(
+                        onTap: () async {
+                          try {
+                            SharedPreferences pref = await SharedPreferences.getInstance();
+                            String token = pref.getString(StringConstants.token);
+                            final CollectionReference userCollection =
+                                FirebaseFirestore.instance.collection(StringConstants.userCollection);
+                            DocumentSnapshot snapshot = await userCollection.doc(token).get();
+
+                            List bookmarked =
+                                snapshot.data().toString().contains('bookmarked') ? snapshot.get('bookmarked') : [];
+                            if (!bookmarked.contains(bookModel.id))
+                              bookmarked.add(bookModel.id);
+                            else {
+                              ToastPreset.err(str: 'Already Added', context: context);
+                              return;
+                            }
+                            await userCollection.doc(token).set({
+                              'bookmarked': bookmarked,
+                            }, SetOptions(merge: true));
+                            ToastPreset.successful(str: 'Bookmarked', context: context);
+                          } catch (e) {
+                            ToastPreset.err(str: e.toString(), context: context);
+                          }
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.bookmark_add_outlined,
+                              size: 15,
+                              color: ColorConstant.highlighterPink,
+                            ),
+                            SizedBox(width: 6),
+                            Text(
+                              "Bookmark",
+                              style: TextStyles.subTextRed,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Spacer(),
+                ],
+              ),
+            ),
+            SizedBox(width: 12),
+          ],
+        ),
       ),
     );
   }
@@ -139,6 +177,15 @@ class _ExploreState extends State<Explore> {
             children: <Widget>[
               SizedBox(height: kToolbarHeight),
               ListTile(
+                trailing: InkWell(
+                  onTap: () {
+                    showSearch(context: context, delegate: BookSearch());
+                  },
+                  child: Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
+                ),
                 contentPadding: EdgeInsets.zero,
                 title: Text(
                   "Explore",
@@ -155,49 +202,51 @@ class _ExploreState extends State<Explore> {
                   ],
                 ),
               ),
-              Text('Trending', style: TextStyles.actionTitleBlack),
-              SizedBox(height: 12),
-              // for(int)
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    for (int i = 0; i < 10; i++)
-                      Container(
-                        margin: EdgeInsets.only(right: 13),
-                        child: Column(
-                          children: [
-                            Container(
-                              width: w * 0.25,
-                              height: w * 0.25 * 1.3,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(7)),
-                                color: ColorConstant.purple,
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Container(
-                              width: w * 0.25,
-                              child: Text(
-                                'Title of the book is hee and all ',
-                                style: TextStyles.subText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 35),
+              // Text('Trending', style: TextStyles.actionTitleBlack),
+              // SizedBox(height: 12),
+              // // for(int)
+              // SingleChildScrollView(
+              //   scrollDirection: Axis.horizontal,
+              //   child: Row(
+              //     children: [
+              //       for (int i = 0; i < 10; i++)
+              //         Container(
+              //           margin: EdgeInsets.only(right: 13),
+              //           child: Column(
+              //             children: [
+              //               Container(
+              //                 width: w * 0.25,
+              //                 height: w * 0.25 * 1.3,
+              //                 decoration: BoxDecoration(
+              //                   borderRadius: BorderRadius.all(Radius.circular(7)),
+              //                   color: ColorConstant.purple,
+              //                 ),
+              //               ),
+              //               SizedBox(height: 5),
+              //               Container(
+              //                 width: w * 0.25,
+              //                 child: Text(
+              //                   'Title of the book is hee and all ',
+              //                   style: TextStyles.subText,
+              //                   textAlign: TextAlign.center,
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(height: 35),
               Text('Recently Added', style: TextStyles.actionTitleBlack),
-              SizedBox(height: 12),
+              SizedBox(height: 15),
+
               StreamBuilder(
                 stream: FirebaseFirestore.instance.collection(StringConstants.bookCollection).snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
+                      padding: EdgeInsets.zero,
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: snapshot.data.docs.length,

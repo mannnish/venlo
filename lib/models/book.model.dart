@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class BookModel {
   String id;
   String title;
@@ -35,9 +37,9 @@ class BookModel {
     ownerId = json['owner_id'];
     ownerName = json['owner_name'];
     ownerPhone = json['owner_phone'];
-    //   // TODO : Timestamp to date time
-    // createdAt = DateTime.parse(json['created_at']);
-    createdAt = DateTime.now();
+    Timestamp ts = json['created_at'];
+    createdAt = DateTime.fromMicrosecondsSinceEpoch(ts.microsecondsSinceEpoch);
+    // createdAt = DateTime.now();
     views = json['views'];
     sold = json['sold'];
     photoUrl = json['photo_url'].cast<String>();
@@ -58,5 +60,13 @@ class BookModel {
     data['photo_url'] = this.photoUrl;
     data['categories'] = this.categories;
     return data;
+  }
+
+  bool doesContain(String query) {
+    if (this.title.toLowerCase().contains(query.toLowerCase())) return true;
+    if (this.publication.toLowerCase().contains(query.toLowerCase())) return true;
+    if (this.author.toLowerCase().contains(query.toLowerCase())) return true;
+    if (this.ownerName.toLowerCase().contains(query.toLowerCase())) return true;
+    return false;
   }
 }
