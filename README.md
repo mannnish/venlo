@@ -1,36 +1,38 @@
-## Venlo
-A Mobile application for students to let the public know about their unused books so that the needy ones can communicate 
+<h1 align="center" id="title">Venlo</h1>
 
+- Venlo is a Mobile application for students to let the public know about their unused books so that the needy ones can communicate and get it.
+- It uses Firebase (Backed as a service) to store the data and Flutter as a frontend framework.
+- apk link: [venlo.apk](./assets/post-build/venlo.apk)
 
-### Table of Contents
-1. [Technologies](#technologies)
-2. [Installation](#installation)
+---
 
+### Project Screenshots
 
-### Technologies
-A list of technologies used within the project:
-* [Flutter](https://flutter.dev/): Version 2.5.3
-* [Firebase](https://firebase.google.com/): 
+<img src="./assets/post-build/merge1.png">
+<img src="./assets/post-build/merge2.png">
 
+---  
+  
+### 🧐 Features
+- Integrated with Google Authentication
+- User can post their books
+- User can see the books posted by others
+- User can see the profile of the book owner
+- User can call the book owner
 
-### Installation - Developmenti
-Flutter SDK will be required on your machine to run the project
+---
+
+### 🛠️ Installation Steps
+```sh
+# flutter version : 2.5.3
+flutter pub get
+flutter run
 ```
-$ git clone ...
-$ cd venlo
-$ code .
-$ flutter run
-```
-Note: To use the application you must be connected with a mobile device
+
+---
 
 
-### Installation - Release
-Check out the release tab for the `.apk` file
-
-
-### Packages
-- [x] `flutter bloc` - for global state management
-- [x] `firebase` related - for social login
-- [x] `firestore` related - to store data in noSQL format on firebase
-- [x] `shared preference` - to locally store the user data to use it as cache
-- [x] `image picker` and other ui related packages 
+### 💻 Technologies Used
+- runtime/ framework: Flutter
+- dependencies: flutter_bloc, firebase_auth, cloud_firestore, shared_preferences, etc.
+- third-party: Firebase
